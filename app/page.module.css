@@ -1,0 +1,23 @@
+.page {
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* set your real header height here */
+.snap {
+  --header-h: -176px;
+
+  height: 100vh;
+  overflow-y: auto;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+
+  /* this is the key */
+  scroll-padding-top: var(--header-h);
+}
+
+/* Tell snap to align using the visible area */
+.snap > section {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
