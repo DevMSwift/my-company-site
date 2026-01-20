@@ -47,3 +47,393 @@
   opacity: 0.92;
   max-width: 60ch;
 }
+
+/* Body Animation */
+/* HERO animated overlay */
+.heroWrap {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  padding: 50px 20px 40px;
+  color: #fff;
+}
+
+.heroInner {
+  width: min(1100px, 100%);
+  text-align: center;
+  color: #fff;
+}
+
+/* Each line is clipped = "behind wall" effect */
+.heroLine {
+  overflow: hidden;
+  line-height: 1.05;
+}
+
+.heroLines {
+  display: grid;
+  gap: 12px;
+  justify-items: center;
+}
+
+/* Start above (hidden), then slide down into center */
+.heroText {
+  font-family: var(--font-sans);
+  display: inline-block;
+  font-size: clamp(36px, 6vw, 78px);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+
+  transform: translateY(-120%);
+  opacity: 0;
+  transition: transform 800ms cubic-bezier(.2, .9, .2, 1), opacity 700ms ease;
+}
+
+.comName {
+  font-family: var(--font-display) !important;
+  font-weight: 800;
+  color: #F26522;
+}
+
+/* When "on" -> drop into place */
+.on {
+  transform: translateY(0%);
+  opacity: 1;
+}
+
+.accent {
+  color: #f47a1f;
+}
+
+/* Paragraph appears after the 3 lines */
+.heroBody {
+  margin: 18px auto 0;
+  max-width: 60ch;
+  font-size: clamp(14px, 2vw, 18px);
+  line-height: 1.6;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 650ms ease, transform 650ms ease;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.bodyOn {
+  opacity: 0.92;
+  transform: translateY(0);
+}
+
+.heroBtn {
+  margin: 38px auto 0;
+  border: 0;
+  cursor: pointer;
+
+  /* Start as a cube */
+  width: 64px;
+  height: 64px;
+  border-radius: 44px;
+
+  background: #f26522;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 500;
+
+  /* hide text until the end */
+  color: transparent;
+  text-shadow: none;
+
+  letter-spacing: -0.01em;
+
+  /* Hide until animation starts */
+  opacity: 0;
+  transform: perspective(900px) rotateY(0deg) rotateX(0deg) scale(0.9);
+  transform-style: preserve-3d;
+
+  box-shadow:
+    0 18px 45px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22);
+
+  padding: 0 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  /* Button text hidden while cube */
+  font-size: 0;
+  white-space: nowrap;
+
+  transition: opacity 450ms ease;
+}
+
+/* Triggered when stage === body */
+.btnOn {
+  opacity: 1;
+  animation: cubeWobble 900ms ease-in-out 0ms 1,
+    unfoldWide 650ms cubic-bezier(.2, .9, .2, 1) 900ms 1 forwards;
+}
+
+/* 3D wobble like a cube rotating left-right */
+@keyframes cubeWobble {
+  0% {
+    transform: perspective(900px) rotateY(0deg) rotateX(0deg) scale(0.9);
+  }
+
+  20% {
+    transform: perspective(900px) rotateY(-22deg) rotateX(6deg) scale(1.0);
+  }
+
+  45% {
+    transform: perspective(900px) rotateY(22deg) rotateX(-6deg) scale(1.0);
+  }
+
+  70% {
+    transform: perspective(900px) rotateY(-12deg) rotateX(4deg) scale(1.0);
+  }
+
+  100% {
+    transform: perspective(900px) rotateY(0deg) rotateX(0deg) scale(1.0);
+  }
+}
+
+/* Unfold: cube becomes a wide 2D rectangle */
+@keyframes unfoldWide {
+  0% {
+    width: 64px;
+    height: 64px;
+    border-radius: 14px;
+    filter: saturate(1);
+  }
+
+  55% {
+    width: 260px;
+    height: 64px;
+    border-radius: 14px;
+  }
+
+  100% {
+    width: 340px;
+    height: 52px;
+    border-radius: 41px;
+    color: #ffffff;
+    /* flatten to 2D */
+    transform: perspective(900px) rotateY(0deg) rotateX(0deg);
+  }
+}
+
+/* Reveal text after it becomes wide */
+.btnOn {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.heroBtn:hover {
+  transform: translateY(-1px);
+  box-shadow:
+    0 22px 55px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.24);
+}
+
+.heroBtn:active {
+  transform: translateY(0px);
+}
+
+@media (max-width: 520px) {
+  @keyframes unfoldWide {
+    0% {
+      width: 64px;
+      height: 64px;
+      border-radius: 14px;
+    }
+
+    55% {
+      width: 240px;
+      height: 64px;
+      border-radius: 14px;
+    }
+
+    100% {
+      width: min(320px, calc(100vw - 56px));
+      height: 52px;
+      border-radius: 16px;
+    }
+  }
+
+  @keyframes unfoldWide {
+    0% {
+      width: 64px;
+      height: 64px;
+      border-radius: 14px;
+      filter: saturate(1);
+    }
+
+    55% {
+      width: 260px;
+      height: 64px;
+      border-radius: 14px;
+    }
+
+    100% {
+      width: 340px;
+      height: 52px;
+      border-radius: 41px;
+      color: #ffffff;
+      /* flatten to 2D */
+      transform: perspective(900px) rotateY(0deg) rotateX(0deg);
+    }
+  }
+
+  .btnOn {
+    font-size: 16px;
+    font-weight: 500;
+  }
+}
+
+
+
+
+
+
+
+/* SECOND SECTION */
+/* SERVICES section wrapper */
+.infoWrap {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  padding: 110px 20px 60px;
+  color: #fff;
+}
+
+.infoInner {
+  width: min(1100px, 100%);
+  display: grid;
+  gap: 42px;
+}
+
+/* Two “left/right” rows */
+.splitTop,
+.splitBottom {
+  grid-template-columns: 1fr;
+}
+
+/* Top text sits on the RIGHT side */
+.topText,
+.bottomText {
+    justify-self: center;
+  text-align: center;
+  max-width: 720px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  backdrop-filter: none;
+  border-radius: 0;
+}
+
+.topTitle {
+  margin: 0;
+  font-size: clamp(22px, 3vw, 34px);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+.topSub {
+  margin: 12px 0 0;
+  font-size: clamp(13px, 1.7vw, 15px);
+  line-height: 1.7;
+  opacity: 0.92;
+}
+
+.bottomTitle {
+  margin: 0;
+  font-size: clamp(18px, 2.4vw, 26px);
+  font-weight: 900;
+  letter-spacing: -0.01em;
+}
+
+.bottomSub {
+  margin: 10px 0 0;
+  font-size: clamp(13px, 1.7vw, 15px);
+  line-height: 1.7;
+  opacity: 0.92;
+}
+
+/* --- Animations (auto-run when section renders) --- */
+/* Right -> center */
+.revealRight,
+.revealRightDelay,
+.revealRightSub {
+  display: block;
+  opacity: 0;
+  transform: translateX(70px);
+  filter: blur(1px);
+}
+
+.infoIn .revealRight {
+  animation: inRight 900ms cubic-bezier(.2,.9,.2,1) 120ms forwards;
+}
+
+.infoIn .revealRightDelay {
+  animation: inRight 900ms cubic-bezier(.2,.9,.2,1) 420ms forwards;
+}
+
+.infoIn .revealRightSub {
+  animation: inRight 900ms cubic-bezier(.2,.9,.2,1) 720ms forwards;
+}
+
+.infoIn .revealLeft {
+  animation: inLeft 900ms cubic-bezier(.2,.9,.2,1) 980ms forwards;
+}
+
+.infoIn .revealLeftDelay {
+  animation: inLeft 900ms cubic-bezier(.2,.9,.2,1) 1280ms forwards;
+}
+
+/* Left -> center */
+.revealLeft,
+.revealLeftDelay {
+  display: inline-block;
+  opacity: 0;
+  transform: translateX(-70px);
+  filter: blur(1px);
+}
+
+.revealLeft {
+  animation: inLeft 900ms cubic-bezier(.2,.9,.2,1) 1400ms forwards;
+}
+.revealLeftDelay {
+  animation: inLeft 900ms cubic-bezier(.2,.9,.2,1) 1750ms forwards;
+}
+
+@keyframes inRight {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes inLeft {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+    filter: blur(0);
+  }
+}
+
+/* Mobile: stack everything */
+@media (max-width: 920px) {
+  .splitTop,
+  .splitBottom {
+    grid-template-columns: 1fr;
+  }
+
+  .topText,
+  .bottomText {
+    justify-self: center;
+    max-width: 640px;
+  }
+}

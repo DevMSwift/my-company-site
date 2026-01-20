@@ -13,13 +13,15 @@ export default function Home() {
           videoSrc="/video/hero-bg.mp4"
           title="CodeCore"
           subtitle="We build modern web & mobile solutions."
+          variant="hero"
         />
 
         <VideoSection
           id="section2"
           videoSrc="/video/section-2.mp4"
-          title="Our Services"
-          subtitle="Web, Mobile, UI/UX, and scalable backend systems."
+          title="Why Choose Code Core"
+          subtitle="as Your Trusted Development Company"
+          variant="info"
         />
       </main>
     </div>

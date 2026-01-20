@@ -3,6 +3,7 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --font-display: var(--font-zalando-expanded), var(--font-sans);
 }
 
 @theme inline {
@@ -24,4 +25,12 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+html, body {
+  font-family: var(--font-figtree), system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+}
+
+.displayFont {
+  font-family: var(--font-display);
 }

@@ -1,10 +1,29 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Figtree, Geist, Geist_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
+});
+
+const figtree = Figtree({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700", "800", "900"],
+  display: "swap",
+  variable: "--font-figtree",
+});
+
+const zalandoExpanded = localFont({
+  variable: "--font-zalando-expanded",
+  display: "swap",
+  src: [
+    { path: "./fonts/ZalandoSansExpanded/ZalandoSansExpanded-Regular.woff2", weight: "400", style: "normal" },
+    { path: "./fonts/ZalandoSansExpanded/ZalandoSansExpanded-Medium.woff2",  weight: "500", style: "normal" },
+    { path: "./fonts/ZalandoSansExpanded/ZalandoSansExpanded-Bold.woff2",    weight: "700", style: "normal" },
+    { path: "./fonts/ZalandoSansExpanded/ZalandoSansExpanded-Black.woff2", weight: "900", style: "normal" },
+  ],
 });
 
 const geistMono = Geist_Mono({
@@ -70,11 +89,9 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{ children: React.ReactNode }>) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${figtree.variable} ${zalandoExpanded.variable}`}>
       <body>{children}</body>
     </html>
   );
