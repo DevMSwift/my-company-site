@@ -30,6 +30,14 @@
   transform: scaleX(0);
 }
 
+/* Hide top bar for section 3 */
+.hidden {
+  opacity: 0;
+  transform: translateY(-100px);
+  pointer-events: none;
+  transition: opacity 220ms ease, transform 220ms ease;
+}
+
 /* Glowing border overlay */
 .inner::before {
   content: "";

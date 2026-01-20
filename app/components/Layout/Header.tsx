@@ -20,7 +20,7 @@ const LANGS: Lang[] = [
   { code: "PT", label: "Portuguese", flag: "🇵🇹" },
 ];
 
-export default function Header() {
+export default function Header({ hidden = false }: { hidden?: boolean }) {
   const innerRef = useRef<HTMLDivElement | null>(null);
 
   const [servicesOpen, setServicesOpen] = useState(false);
@@ -86,7 +86,7 @@ export default function Header() {
   }, [mobileOpen]);
 
   return (
-    <header className={`${styles.header} ${styles.reveal}`}>
+    <header className={`${styles.header} ${styles.reveal} ${hidden ? styles.hidden : ""}`}>
       {/* TOP BAR */}
       <div className={styles.inner} ref={innerRef} onMouseMove={onMove}>
         <a

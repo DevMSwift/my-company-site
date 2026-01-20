@@ -92,7 +92,7 @@
 }
 
 .comName {
-  font-family: var(--font-display) !important;
+  font-family: var(--font-display);
   font-weight: 800;
   color: #F26522;
 }
@@ -301,64 +301,89 @@
   position: relative;
   z-index: 2;
   height: 100%;
+  justify-content: center;
   display: grid;
   place-items: center;
-  padding: 110px 20px 60px;
+  padding: 10px 20px 30px;
   color: #fff;
 }
 
 .infoInner {
   width: min(1100px, 100%);
   display: grid;
-  gap: 42px;
+  gap: 22px;
 }
 
 /* Two “left/right” rows */
 .splitTop,
 .splitBottom {
-  grid-template-columns: 1fr;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: start;
+  gap: 18px;
 }
 
 /* Top text sits on the RIGHT side */
 .topText,
 .bottomText {
-    justify-self: center;
-  text-align: center;
-  max-width: 720px;
-  padding: 0;
-  border: 0;
-  background: transparent;
-  backdrop-filter: none;
-  border-radius: 0;
+  max-width: 560px;
+  padding: 20px 18px;
+  border-radius: 22px;
+
+  background: rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(16px);
+
+  box-shadow:
+    0 18px 45px rgba(0, 0, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+/* top card on RIGHT */
+.topText {
+  font-family: var(--font-zalando-expanded), var(--font-sans);
+  justify-self: end;
+  text-align: left;
+}
+
+/* bottom card on LEFT */
+.bottomText {
+  justify-self: start;
+  text-align: left;
 }
 
 .topTitle {
   margin: 0;
-  font-size: clamp(22px, 3vw, 34px);
-  font-weight: 900;
+  font-size: 18px;
+  font-weight: 600;
   letter-spacing: -0.02em;
-  line-height: 1.15;
+  line-height: 0.8;
+}
+
+.brandAccent {
+  color: #F26522;
+  font-weight: 900;
 }
 
 .topSub {
   margin: 12px 0 0;
-  font-size: clamp(13px, 1.7vw, 15px);
-  line-height: 1.7;
-  opacity: 0.92;
+  font-size: clamp(13px, 1.2vw, 15px);
+  line-height: 1.3;
+  opacity: 0.52;
 }
 
 .bottomTitle {
   margin: 0;
   font-size: clamp(18px, 2.4vw, 26px);
-  font-weight: 900;
+  font-weight: 600;
   letter-spacing: -0.01em;
 }
 
 .bottomSub {
   margin: 10px 0 0;
-  font-size: clamp(13px, 1.7vw, 15px);
-  line-height: 1.7;
-  opacity: 0.92;
+  font-size: clamp(13px, 1.2vw, 15px);
+  line-height: 1.3;
+  opacity: 0.52;
 }
 
 /* --- Animations (auto-run when section renders) --- */
@@ -368,44 +393,37 @@
 .revealRightSub {
   display: block;
   opacity: 0;
-  transform: translateX(70px);
+  transform: translateX(470px);
   filter: blur(1px);
 }
 
 .infoIn .revealRight {
-  animation: inRight 900ms cubic-bezier(.2,.9,.2,1) 120ms forwards;
+  animation: inRight 900ms cubic-bezier(.2, .9, .2, 1) 120ms forwards;
 }
 
 .infoIn .revealRightDelay {
-  animation: inRight 900ms cubic-bezier(.2,.9,.2,1) 420ms forwards;
+  animation: inRight 900ms cubic-bezier(.2, .9, .2, 1) 420ms forwards;
 }
 
 .infoIn .revealRightSub {
-  animation: inRight 900ms cubic-bezier(.2,.9,.2,1) 720ms forwards;
+  animation: inRight 900ms cubic-bezier(.2, .9, .2, 1) 720ms forwards;
 }
 
 .infoIn .revealLeft {
-  animation: inLeft 900ms cubic-bezier(.2,.9,.2,1) 980ms forwards;
+  animation: inLeft 900ms cubic-bezier(.2, .9, .2, 1) 980ms forwards;
 }
 
 .infoIn .revealLeftDelay {
-  animation: inLeft 900ms cubic-bezier(.2,.9,.2,1) 1280ms forwards;
+  animation: inLeft 900ms cubic-bezier(.2, .9, .2, 1) 1280ms forwards;
 }
 
 /* Left -> center */
 .revealLeft,
 .revealLeftDelay {
-  display: inline-block;
+    display: block;
   opacity: 0;
-  transform: translateX(-70px);
+  transform: translateX(-470px);
   filter: blur(1px);
-}
-
-.revealLeft {
-  animation: inLeft 900ms cubic-bezier(.2,.9,.2,1) 1400ms forwards;
-}
-.revealLeftDelay {
-  animation: inLeft 900ms cubic-bezier(.2,.9,.2,1) 1750ms forwards;
 }
 
 @keyframes inRight {
@@ -426,6 +444,7 @@
 
 /* Mobile: stack everything */
 @media (max-width: 920px) {
+
   .splitTop,
   .splitBottom {
     grid-template-columns: 1fr;
@@ -435,5 +454,172 @@
   .bottomText {
     justify-self: center;
     max-width: 640px;
+    text-align: center;
+  }
+}
+
+
+
+
+
+
+/*
+CARDS
+*/
+
+/* ===== Cards Section (no video) ===== */
+.cardsSection {
+  height: 100vh;
+  width: 100%;
+}
+
+.cardsGrid {
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.serviceCard {
+  position: relative;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+  box-shadow:
+    0 22px 85px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.24);
+
+  /* initial hidden state */
+  opacity: 0;
+  transform: translateY(40px) scale(0.98);
+}
+
+/* when section is visible */
+.cardsIn .serviceCard {
+  animation: cardIn 1500ms cubic-bezier(.2, .9, .2, 1) forwards;
+}
+
+.cardsIn .card1 {
+  animation-delay: 320ms;
+}
+
+.cardsIn .card2 {
+  animation-delay: 460ms;
+}
+
+.cardsIn .card3 {
+  animation-delay: 600ms;
+}
+
+.cardsIn .card4 {
+  animation-delay: 740ms;
+}
+
+@keyframes cardIn {
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.cardShade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom,
+      rgba(0, 0, 0, 0.95),
+      rgba(0, 0, 0, 0.25));
+}
+
+.cardText {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  padding: 60px 22px;
+  display: grid;
+  align-content: start;
+  justify-items: center;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.92);
+  opacity: 0.25;
+}
+
+.cardText h3 {
+  margin: 0 0 14px;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #fff;
+}
+
+.cardText p {
+  margin: 0;
+  max-width: 34ch;
+  font-size: 13px;
+  line-height: 1.7;
+  opacity: 0;
+}
+
+.cardShade {
+  pointer-events: none;
+}
+
+/* nice hover */
+.serviceCard:hover .cardShade {
+  background: linear-gradient(to bottom,
+      rgba(0, 0, 0, 0.35),
+      rgba(0, 0, 0, 0.95));
+}
+
+.serviceCard:hover .cardText {
+  opacity: 1;
+}
+
+.serviceCard:hover .cardText p {
+  opacity: 0.92;
+}
+
+/* responsive */
+@media (max-width: 980px) {
+  .cardsGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .cardText {
+    padding: 40px 22px;
+
+  }
+
+  .cardText h3 {
+    margin: 0 0 8px;
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  .cardText p {
+    text-align: left;
+    font-size: 13px;
+    line-height: 1.4;
+  }
+}
+
+@media (max-width: 560px) {
+  .cardsGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .cardText {
+    padding: 30px 16px;
+  }
+
+  .cardText h3 {
+    margin: 0 0 8px;
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  .cardText p {
+    text-align: left;
+    font-size: 11px;
+    line-height: 1.2;
   }
 }
