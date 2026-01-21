@@ -56,6 +56,9 @@ export default function Home() {
         />
 
         <VideoSection id="section3" videoSrc="" variant="cards" />
+
+
+        <VideoSection id="section4" variant="nextSteps" />
       </main>
     </div>
   );

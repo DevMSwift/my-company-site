@@ -8,7 +8,7 @@ type Props = {
   videoSrc?: string;
   title?: ReactNode;
   subtitle?: ReactNode;
-  variant?: "hero" | "info" | "cards" | "default";
+  variant?: "hero" | "info" | "cards" | "nextSteps" | "default";
 };
 
 type Stage = "idle" | "l1" | "l2" | "l3" | "body";
@@ -81,10 +81,49 @@ export default function VideoSection({
   const isHero = variant === "hero";
   const isInfo = variant === "info";
   const isCards = variant === "cards";
+  const isNextSteps = variant === "nextSteps";
+
+  const nextRef = useRef<HTMLDivElement | null>(null);
+  const [nextIn, setNextIn] = useState(false);
+  const [step, setStep] = useState<"s1" | "s2" | "s3" | "final">("s1");
+
+  useEffect(() => {
+    if (variant !== "nextSteps") return;
+
+    const el = nextRef.current;
+    if (!el) return;
+
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) setNextIn(true);
+      },
+      { threshold: 0.45 }
+    );
+
+    io.observe(el);
+    return () => io.disconnect();
+  }, [variant]);
+
+  useEffect(() => {
+    if (variant !== "nextSteps") return;
+    if (!nextIn) return;
+
+    setStep("s1");
+
+    const t1 = window.setTimeout(() => setStep("s2"), 2000);  // show 1 for 2s
+    const t2 = window.setTimeout(() => setStep("s3"), 4000); // show 2 for 2s
+    const t3 = window.setTimeout(() => setStep("final"), 6000); // show 3 then final
+
+    return () => {
+      window.clearTimeout(t1);
+      window.clearTimeout(t2);
+      window.clearTimeout(t3);
+    };
+  }, [variant, nextIn]);
 
   return (
     <section id={id} className={styles.section}>
-      {!isCards && (
+      {!isCards && !isNextSteps && (
         <>
           <video className={styles.video} autoPlay muted loop playsInline preload="metadata">
             <source src={videoSrc} type="video/mp4" />
@@ -94,7 +133,7 @@ export default function VideoSection({
       )}
 
       {/* DEFAULT sections */}
-      {!isHero && !isInfo && !isCards && (
+      {!isHero && !isInfo && !isCards && !isNextSteps && (
         <div className={styles.content}>
           <h1 className={styles.title}>{title}</h1>
           <p className={styles.subtitle}>{subtitle}</p>
@@ -332,6 +371,116 @@ export default function VideoSection({
                 </p>
               </div>
             </article>
+          </div>
+        </div>
+      )}
+
+
+
+
+
+      {isNextSteps && (
+        <div
+          ref={nextRef}
+          className={`${styles.nextWrap} ${nextIn ? styles.nextIn : ""}`}
+        >
+          {/* orange glow */}
+          <div className={styles.nextGlow} />
+
+          {/* glass ball left */}
+          <img
+            className={styles.nextBall}
+            src="/images/black-glass-ball-img.png"
+            alt=""
+            aria-hidden="true"
+          />
+
+          {/* Center area */}
+          <div className={styles.nextCenter}>
+            <h2 className={`${styles.nextTitle} ${step === "final" ? styles.titleOn : ""}`}>
+              What Next?
+            </h2>
+
+            {/* Step “spotlight” (one at a time) */}
+            <div className={styles.nextSpot}>
+              <div
+                className={`${styles.spotItem} ${styles.spot1} ${step === "s1" ? styles.spotOn : (nextIn && step !== "final" ? styles.spotOff : "")
+                  }`}
+              >
+                <img className={styles.spotIcon} src="/images/connect-img.png" alt="" aria-hidden="true" />
+                <h3>First Connect</h3>
+                <p>
+                  Our experts will do primary analysis of your requirements and call you within 24 hours
+                  with more information on our next steps.
+                </p>
+              </div>
+
+              <div
+                className={`${styles.spotItem} ${styles.spot2} ${step === "s2" ? styles.spotOn : (nextIn && step !== "final" ? styles.spotOff : "")
+                  }`}
+              >
+                <img className={styles.spotIcon} src="/images/analysis-img.png" alt="" aria-hidden="true" />
+                <h3>Requirement Analysis</h3>
+                <p>
+                  Our team will collect all requirements for your project, clarify your business objectives,
+                  expectations and compare market segment.
+                </p>
+              </div>
+
+              <div
+                className={`${styles.spotItem} ${styles.spot3} ${step === "s3" ? styles.spotOn : (nextIn && step !== "final" ? styles.spotOff : "")
+                  }`}
+              >
+                <img className={styles.spotIcon} src="/images/time-img.png" alt="" aria-hidden="true" />
+                <h3>Final Project Estimate</h3>
+                <p>
+                  We will develop an elaborate project blueprint followed by a final estimate and an action plan
+                  for your project.
+                </p>
+              </div>
+            </div>
+
+            {/* Final 3-column layout */}
+            <div className={`${styles.nextGrid} ${step === "final" ? styles.gridOn : ""}`}>
+              <div className={styles.gridItem}>
+                <img className={styles.gridIcon} src="/images/connect-img.png" alt="" aria-hidden="true" />
+                <h3>First Connect</h3>
+                <p>
+                  Our experts will do primary analysis of your requirements and call you within 24 hours with
+                  more information on our next steps.
+                </p>
+              </div>
+
+              <div className={styles.gridItem}>
+                <img className={styles.gridIcon} src="/images/analysis-img.png" alt="" aria-hidden="true" />
+                <h3>Requirement Analysis</h3>
+                <p>
+                  Our team will collect all requirements for your project, clarify your business objectives,
+                  expectations and compare market segment.
+                </p>
+              </div>
+
+              <div className={styles.gridItem}>
+                <img className={styles.gridIcon} src="/images/time-img.png" alt="" aria-hidden="true" />
+                <h3>Final Project Estimate</h3>
+                <p>
+                  We will develop an elaborate project blueprint followed by a final estimate and an action plan
+                  for your project.
+                </p>
+              </div>
+            </div>
+
+            {/* CTA */}
+            <div className={`${styles.nextCta} ${step === "final" ? styles.ctaOn : ""}`}>
+              <h3>INTERESTED IN OUR SERVICES?</h3>
+              <p>
+                Let us know what problem you want to solve,
+                <br />
+                and we’ll get back to you with our next steps.
+              </p>
+
+              <button className={styles.nextBtn}>Start your project</button>
+            </div>
           </div>
         </div>
       )}
