@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import styles from "./header.module.css";
+import Link from "next/link";
 
 type Lang = {
   code: string;
@@ -23,18 +24,14 @@ const LANGS: Lang[] = [
 export default function Header({ hidden = false }: { hidden?: boolean }) {
   const innerRef = useRef<HTMLDivElement | null>(null);
 
-  const [servicesOpen, setServicesOpen] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
   const [lang, setLang] = useState<Lang>(LANGS[0]); // EN default
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
   const [mobileLangOpen, setMobileLangOpen] = useState(false);
 
   const closeAll = () => {
-    setServicesOpen(false);
     setLangOpen(false);
     setMobileOpen(false);
-    setMobileServicesOpen(false);
     setMobileLangOpen(false);
   };
 
@@ -58,7 +55,6 @@ export default function Header({ hidden = false }: { hidden?: boolean }) {
 
       // If click is outside the header bar, close dropdowns
       if (!el.contains(e.target as Node)) {
-        setServicesOpen(false);
         setLangOpen(false);
       }
       // Drawer is handled by backdrop click + ESC
@@ -94,7 +90,6 @@ export default function Header({ hidden = false }: { hidden?: boolean }) {
           href="#home"
           aria-label="Go to Home"
           onClick={() => {
-            setServicesOpen(false);
             setLangOpen(false);
           }}
         >
@@ -108,48 +103,13 @@ export default function Header({ hidden = false }: { hidden?: boolean }) {
 
         {/* DESKTOP NAV */}
         <nav className={`${styles.nav} ${styles.drop}`} aria-label="Primary">
-          {/* Services dropdown */}
-          <div className={styles.menu}>
-            <button
-              type="button"
-              className={styles.navBtn}
-              aria-haspopup="menu"
-              aria-expanded={servicesOpen}
-              onClick={() => {
-                setServicesOpen((v) => !v);
-                setLangOpen(false);
-              }}
-            >
-              Services <span className={styles.chev}>▾</span>
-            </button>
-
-            <div
-              className={`${styles.dropdown} ${servicesOpen ? styles.open : ""}`}
-              role="menu"
-            >
-              <a
-                role="menuitem"
-                href="#services-web"
-                onClick={() => setServicesOpen(false)}
-              >
-                Web &amp; Web App Development
-              </a>
-              <a
-                role="menuitem"
-                href="#services-mobile"
-                onClick={() => setServicesOpen(false)}
-              >
-                Desktop &amp; Mobile App Development
-              </a>
-              <a
-                role="menuitem"
-                href="#services-uiux"
-                onClick={() => setServicesOpen(false)}
-              >
-                UX &amp; UI Design Services
-              </a>
-            </div>
-          </div>
+          <Link href="/" className={styles.link}>
+            Home
+          </Link>
+          {/* Services */}
+          <Link href="/services/web" className={styles.link}>
+            Services
+          </Link>
 
           <a href="#projects" className={styles.link}>
             Projects
@@ -170,7 +130,6 @@ export default function Header({ hidden = false }: { hidden?: boolean }) {
               aria-expanded={langOpen}
               onClick={() => {
                 setLangOpen((v) => !v);
-                setServicesOpen(false);
               }}
             >
               <span className={styles.langCode}>{lang.code}</span>
@@ -208,10 +167,8 @@ export default function Header({ hidden = false }: { hidden?: boolean }) {
           className={`${styles.mobileBtn} ${styles.drop}`}
           aria-label="Open menu"
           onClick={() => {
-            setServicesOpen(false);
             setLangOpen(false);
             setMobileOpen(true);
-            setMobileServicesOpen(false);
             setMobileLangOpen(false);
           }}
         >
@@ -249,9 +206,18 @@ export default function Header({ hidden = false }: { hidden?: boolean }) {
         </div>
 
         <div className={styles.drawerLinks}>
-          <a href="#home" onClick={() => setMobileOpen(false)}>
+          <Link href="/" className={styles.link} onClick={() => setMobileOpen(false)}>
             Home
-          </a>
+          </Link>
+
+          <Link
+            href="/services/web"
+            className={styles.link}
+            onClick={() => setMobileOpen(false)}
+          >
+            Services
+          </Link>
+
           <a href="#projects" onClick={() => setMobileOpen(false)}>
             Projects
           </a>
@@ -267,35 +233,7 @@ export default function Header({ hidden = false }: { hidden?: boolean }) {
               type="button"
               className={styles.drawerAccordionBtn}
               onClick={() => {
-                setMobileServicesOpen((v) => !v);
-                setMobileLangOpen(false);
-              }}
-              aria-expanded={mobileServicesOpen}
-            >
-              <span>Services</span>
-              <span className={styles.chev}>▾</span>
-            </button>
-
-            <div className={`${styles.drawerAccordionBody} ${mobileServicesOpen ? styles.open : ""}`}>
-              <a className={styles.drawerItem} href="#services-web" onClick={() => setMobileOpen(false)}>
-                Web &amp; Web App Development
-              </a>
-              <a className={styles.drawerItem} href="#services-mobile" onClick={() => setMobileOpen(false)}>
-                Desktop &amp; Mobile App Development
-              </a>
-              <a className={styles.drawerItem} href="#services-uiux" onClick={() => setMobileOpen(false)}>
-                UX &amp; UI Design Services
-              </a>
-            </div>
-          </div>
-
-          <div className={styles.drawerSection}>
-            <button
-              type="button"
-              className={styles.drawerAccordionBtn}
-              onClick={() => {
                 setMobileLangOpen((v) => !v);
-                setMobileServicesOpen(false);
               }}
               aria-expanded={mobileLangOpen}
             >
