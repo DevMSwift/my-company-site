@@ -1,0 +1,219 @@
+.main {
+  background: #000;
+  margin-bottom: -20px;
+}
+
+.heroContainer {
+  position: relative;
+}
+
+.hero {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* make content fill the hero */
+.heroContent {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.holeGlow {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  /* behind cover (z=2), above bg layers */
+  pointer-events: none;
+  /* bright white hole feel */
+  background:
+    radial-gradient(circle at 50% 50%,
+      rgba(255, 255, 255, 0.95) 0%,
+      rgba(255, 255, 255, 0.70) 100%,
+      rgba(255, 255, 255, 0.18) 100%,
+      rgba(255, 255, 255, 0.00) 75%);
+}
+
+/* BG1 (behind) */
+.heroBg {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+
+  /* if you want bg1 different, change this */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  will-change: transform, filter, opacity;
+  transform: translateZ(0);
+}
+
+/* BG2 (above BG1, still behind the cover) */
+.heroBg2 {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image: url("/images/third-web-image.jpg");
+  /* for testing: change to another image to confirm */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  will-change: transform, filter, opacity;
+  transform: translateZ(0);
+}
+
+/* Cover window */
+.heroCover {
+  --overlayOpacity: 1;
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  perspective: 500px;
+  overflow: hidden;
+  background: transparent;
+  scale: 1;
+  outline: 2px solid red;
+}
+
+.heroCover::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: var(--overlayOpacity);
+  background: radial-gradient(circle,
+      rgba(0, 0, 0, 0) 20%,
+      rgba(0, 0, 0, 1) 90%);
+}
+
+.heroCoverImg {
+  outline: 2px solid lime;
+
+  object-fit: cover;
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+.sectionStick {
+  position: relative;
+  min-height: 100vh;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  padding-bottom: 50px;
+  z-index: 50;
+}
+
+.opacityReveal {
+  width: min(60ch, 80vw);
+  text-align: center;
+  font-size: clamp(2rem, 3.2vw, 4.5rem);
+  line-height: 1.15;
+  margin: 0;
+  will-change: transform, opacity;
+}
+
+.char {
+  display: inline-block;
+  opacity: 0.2;
+}
+
+/* remove debug */
+.heroCover {
+  outline: none;
+}
+
+.heroCoverImg {
+  outline: none;
+}
+
+.linksRow {
+  position: absolute;
+  left: 50%;
+  bottom: 238px;
+  transform: translateX(-50%) translateY(12px);
+
+  width: min(900px, calc(100% - 32px));
+  display: grid;
+  gap: 14px;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+z-index: 70;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 250ms ease, transform 250ms ease;
+}
+
+.linksRowVisible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+  pointer-events: auto;
+}
+
+/* These are visual layers only — never capture clicks */
+.heroCover,
+.heroCoverImg,
+.heroContent,
+.heroBg2,
+.holeGlow {
+  pointer-events: none;
+}
+
+.linkCard {
+  display: inline-flex;
+  padding: 10px 12px;
+  color: #fff;
+  text-decoration: none;
+  cursor: pointer;
+  pointer-events: auto;
+  transition: transform 200ms ease, background 200ms ease, border-color 200ms ease;
+}
+
+.linkCard:hover {
+  transform: translateY(-1px);
+  padding-left: 10px;
+}
+
+.linkTitle {
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+
+.linkSub {
+  padding-top: 3px;
+  font-size: 12px;
+  opacity: 0.75;
+  padding-left: 4px;
+}
+
+
+
+@media (max-width: 760px) {
+  .sectionStick {
+    max-height: 80vh;
+  }
+
+  .opacityReveal {
+    width: min(60ch, 80vw);
+    font-size: clamp(1rem, 1.2vw, 4.5rem);
+    line-height: 1.15;
+  }
+
+  .linksRow {
+    flex-wrap: wrap;
+    padding: 0 16px;
+    bottom: 180px;
+  }
+
+  .linkCard {
+    min-width: unset;
+    width: calc(120% - 7px);
+  }
+}

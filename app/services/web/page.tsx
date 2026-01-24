@@ -1,4 +1,4 @@
-
+import ZoomHero from "./ZoomHero";
 import Header from "@/app/components/Layout/Header";
 
 export default function WebServicesPage() {
@@ -6,6 +6,7 @@ export default function WebServicesPage() {
     <main>
       <Header />
 
+      <ZoomHero />;
     </main>
   );
 }
