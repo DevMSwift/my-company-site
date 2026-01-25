@@ -5,6 +5,15 @@ import { useEffect, useRef, useState } from "react";
 import styles from "./header.module.css";
 import Link from "next/link";
 
+type ServiceLink = { href: string; title: string; sub?: string };
+
+const SERVICES: ServiceLink[] = [
+  { href: "/services/web", title: "Web", sub: "Development" },
+  { href: "/services/mobile", title: "Mobile App", sub: "Development Services" },
+  { href: "/services/desktop", title: "Desktop App", sub: "Development Services" },
+  { href: "/services/ui-ux", title: "UX & UI", sub: "Design Services" },
+];
+
 type Lang = {
   code: string;
   label: string;
@@ -13,7 +22,7 @@ type Lang = {
 
 const LANGS: Lang[] = [
   { code: "EN", label: "English", flag: "🇬🇧" },
-  { code: "AR", label: "Arabic", flag: "🇸🇦" }, // Saudi flag as requested
+  { code: "AR", label: "Arabic", flag: "🇸🇦" }, 
   { code: "FR", label: "French", flag: "🇫🇷" },
   { code: "DE", label: "German", flag: "🇩🇪" },
   { code: "IT", label: "Italian", flag: "🇮🇹" },
@@ -24,6 +33,9 @@ const LANGS: Lang[] = [
 export default function Header({ hidden = false }: { hidden?: boolean }) {
   const innerRef = useRef<HTMLDivElement | null>(null);
 
+  const [servicesOpen, setServicesOpen] = useState(false);
+  const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
+
   const [langOpen, setLangOpen] = useState(false);
   const [lang, setLang] = useState<Lang>(LANGS[0]); // EN default
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -31,8 +43,10 @@ export default function Header({ hidden = false }: { hidden?: boolean }) {
 
   const closeAll = () => {
     setLangOpen(false);
+    setServicesOpen(false);
     setMobileOpen(false);
     setMobileLangOpen(false);
+    setMobileServicesOpen(false);
   };
 
   const onMove = (e: React.MouseEvent) => {
@@ -56,6 +70,7 @@ export default function Header({ hidden = false }: { hidden?: boolean }) {
       // If click is outside the header bar, close dropdowns
       if (!el.contains(e.target as Node)) {
         setLangOpen(false);
+        setServicesOpen(false);
       }
       // Drawer is handled by backdrop click + ESC
     };
@@ -107,9 +122,39 @@ export default function Header({ hidden = false }: { hidden?: boolean }) {
             Home
           </Link>
           {/* Services */}
-          <Link href="/services/web" className={styles.link}>
-            Services
-          </Link>
+          <div className={styles.menu}>
+            <button
+              type="button"
+              className={styles.navBtn}
+              aria-haspopup="menu"
+              aria-expanded={servicesOpen}
+              onClick={() => {
+                setServicesOpen((v) => !v);
+                setLangOpen(false);
+              }}
+            >
+              <span className={styles.navBtnLabel}>Services</span>
+              <span className={styles.chev}>▾</span>
+            </button>
+
+            <div
+              className={`${styles.dropdown} ${servicesOpen ? styles.open : ""}`}
+              role="menu"
+            >
+              {SERVICES.map((s) => (
+                <Link
+                  key={s.href}
+                  href={s.href}
+                  className={styles.serviceItem}
+                  role="menuitem"
+                  onClick={() => setServicesOpen(false)}
+                >
+                  <span className={styles.serviceTitle}>{s.title}</span>
+                  {s.sub ? <span className={styles.serviceSub}>{s.sub}</span> : null}
+                </Link>
+              ))}
+            </div>
+          </div>
 
           <a href="#projects" className={styles.link}>
             Projects
@@ -210,13 +255,34 @@ export default function Header({ hidden = false }: { hidden?: boolean }) {
             Home
           </Link>
 
-          <Link
-            href="/services/web"
-            className={styles.link}
-            onClick={() => setMobileOpen(false)}
-          >
-            Services
-          </Link>
+          <div className={styles.drawerSection}>
+            <button
+              type="button"
+              className={styles.drawerAccordionBtn}
+              onClick={() => setMobileServicesOpen((v) => !v)}
+              aria-expanded={mobileServicesOpen}
+            >
+              <span>Services</span>
+              <span className={styles.chev}>▾</span>
+            </button>
+
+            <div className={`${styles.drawerAccordionBody} ${mobileServicesOpen ? styles.open : ""}`}>
+              {SERVICES.map((s) => (
+                <Link
+                  key={s.href}
+                  href={s.href}
+                  className={styles.drawerServiceLink}
+                  onClick={() => {
+                    setMobileOpen(false);
+                    setMobileServicesOpen(false);
+                  }}
+                >
+                  <span className={styles.serviceTitle}>{s.title}</span>
+                  {s.sub ? <span className={styles.serviceSub}>{s.sub}</span> : null}
+                </Link>
+              ))}
+            </div>
+          </div>
 
           <a href="#projects" onClick={() => setMobileOpen(false)}>
             Projects

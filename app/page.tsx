@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Header from "./components/Layout/Header";
 import VideoSection from "./components/Sections/VideoSection";
 import styles from "./page.module.css";
+import BenefitsGridSection from "@/app/components/Sections/BenefitsGridSection";
 
 export default function Home() {
   const mainRef = useRef<HTMLElement | null>(null);
@@ -21,8 +22,8 @@ export default function Home() {
         setHideHeader(entry.isIntersecting);
       },
       {
-        root,          
-        threshold: 0.6 
+        root,
+        threshold: 0.6
       }
     );
 
@@ -59,6 +60,13 @@ export default function Home() {
 
 
         <VideoSection id="section4" variant="nextSteps" />
+
+        <VideoSection
+          id="section5"
+          variant="benefits"
+        >
+          <BenefitsGridSection />
+        </VideoSection>
       </main>
     </div>
   );

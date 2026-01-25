@@ -461,6 +461,44 @@ Mobile Version
   transform: translateX(0);
 }
 
+
+/* Desktop services items */
+.serviceItem {
+  display: grid;
+  gap: 2px;
+  width: 100%;
+  text-align: left;
+  padding: 10px 12px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.serviceItem:hover {
+  background: rgba(255,255,255,0.06);
+}
+
+.serviceTitle {
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 1.1;
+}
+
+.serviceSub {
+  font-size: 12px;
+  opacity: 0.75;
+  line-height: 1.1;
+  padding-left: 4px;
+}
+
+/* Mobile services links */
+.drawerServiceLink {
+  display: grid;
+  gap: 2px;
+  padding: 10px 0;
+  text-decoration: none;
+  color: inherit;
+}
+
 /* Mobile: hide nav links for now (we’ll add a menu later) */
 @media (max-width: 720px) {
   .nav {

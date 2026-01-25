@@ -4,7 +4,6 @@
   overflow: hidden;
   scroll-snap-align: start;
   box-sizing: border-box;
-
 }
 
 .video {
@@ -940,4 +939,36 @@ CARDS
   .gridItem p {
     font-size: 11px;
   }
+}
+
+
+
+/* BENEFITS section (used inside VideoSection by id) */
+.benefitsWrap {
+  position: relative;
+  z-index: 2; /* above overlay */
+  width: 100%;
+  height: auto;
+  min-height: 100vh;
+  overflow: visible;
+}
+
+.benefitsHead {
+  width: min(1100px, calc(100% - 48px));
+  margin: 0 auto 40px auto;
+  text-align: center;
+}
+
+.benefitsTitle {
+  font-family: var(--font-zalando-expanded), var(--font-sans);
+  font-size: clamp(28px, 3vw, 44px);
+  font-weight: 700;
+  margin: 0 0 12px 0;
+}
+
+.benefitsSubtitle {
+  margin: 0 auto;
+  max-width: 850px;
+  opacity: 0.85;
+  font-size: clamp(14px, 1.2vw, 18px);
 }

@@ -2,15 +2,13 @@
 .content {
   /* one source of truth */
   --pagePad: 60px;
-
-  /* 👇 set this to your real header height */
   --headerH: 88px;
 
-  position: relative;       /* ✅ NOT absolute */
+  position: relative;
   width: 100%;
   min-height: 100vh;
 
-  /* ✅ push everything below the top bar */
+  /* push everything below the top bar */
   padding: calc(var(--headerH) + 80px) var(--pagePad) 120px;
 
   color: #fff;
@@ -36,14 +34,15 @@
 
   /* centered, then offset slightly */
   background-position: center 10%;
-  transform: translateX(250px); /* <-- play with this */
+  transform: translateX(250px);
+  /* <-- play with this */
   opacity: 0.9;
 }
 
 
 /* left column */
 .textCol {
-    position: relative;
+  position: relative;
   z-index: 2;
   max-width: 1100px;
   margin: 0 auto;
@@ -52,12 +51,12 @@
 
 /* right column */
 .imageCol {
-   display: none;
+  display: none;
 }
 
 /* Typography  "Figtree"*/
 .title {
-    font-family: "zalandoExpanded";
+  font-family: "zalandoExpanded";
   font-size: clamp(44px, 6vw, 72px);
   line-height: 0.95;
   margin: 0 0 14px;
@@ -65,8 +64,8 @@
 }
 
 .kicker {
-    font-family: "Figtree";
-  margin: 0 0 20px;
+  font-family: "Figtree";
+  margin: 0 0 40px;
   font-size: 24px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -83,7 +82,7 @@
 }
 
 .sectionTitle {
-    font-family: "Figtree";
+  font-family: "Figtree";
   margin: 34px 0 10px;
   font-size: 35px;
   color: rgba(255, 255, 255, 0.9);
@@ -132,8 +131,35 @@
   z-index: 2;
 }
 
+/* base reveal state */
+.reveal {
+  opacity: 0;
+  transform: translate3d(0, 18px, 0);
+  transition: transform 700ms ease, opacity 700ms ease;
+  transition-delay: var(--d, 0ms);
+  will-change: transform, opacity;
+}
+
+/* when section is in view, play animation */
+.inView .reveal {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+/* accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .inView .reveal {
+    transition: none;
+    transform: none;
+    opacity: 1;
+  }
+}
+
 @media (max-width: 1100px) {
-  .bgImage { background-size: 560px auto; }
+  .bgImage {
+    background-size: 560px auto;
+  }
 }
 
 
@@ -141,7 +167,7 @@
    MOBILE < 760px
 ========================= */
 @media (max-width: 760px) {
-    .content {
+  .content {
     --pagePad: 18px;
     padding: 144px var(--pagePad) 80px;
   }
@@ -151,13 +177,21 @@
   }
 
   .title {
-    font-size: 42px;
+    font-size: 32px;
+  }
+
+  .sectionTitle {
+    font-size: 20px;
+  }
+
+  .kicker {
+    font-size: 14px;
   }
 
   .lead,
   .p,
   .list {
-    font-size: 13.5px;
+    font-size: 12.5px;
   }
 
   .bgImage::before {

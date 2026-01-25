@@ -8,7 +8,8 @@ type Props = {
   videoSrc?: string;
   title?: ReactNode;
   subtitle?: ReactNode;
-  variant?: "hero" | "info" | "cards" | "nextSteps" | "default";
+  children?: ReactNode;
+  variant?: "hero" | "info" | "cards" | "nextSteps" | "benefits" | "default";
 };
 
 type Stage = "idle" | "l1" | "l2" | "l3" | "body";
@@ -18,6 +19,7 @@ export default function VideoSection({
   videoSrc,
   title,
   subtitle,
+  children,
   variant = "default",
 }: Props) {
   const [stage, setStage] = useState<Stage>("idle");
@@ -82,6 +84,7 @@ export default function VideoSection({
   const isInfo = variant === "info";
   const isCards = variant === "cards";
   const isNextSteps = variant === "nextSteps";
+  const isBenefits = variant === "benefits";
 
   const nextRef = useRef<HTMLDivElement | null>(null);
   const [nextIn, setNextIn] = useState(false);
@@ -133,7 +136,7 @@ export default function VideoSection({
       )}
 
       {/* DEFAULT sections */}
-      {!isHero && !isInfo && !isCards && !isNextSteps && (
+      {!isHero && !isInfo && !isCards && !isNextSteps && !isBenefits && (
         <div className={styles.content}>
           <h1 className={styles.title}>{title}</h1>
           <p className={styles.subtitle}>{subtitle}</p>
@@ -482,6 +485,25 @@ export default function VideoSection({
               <button className={styles.nextBtn}>Start your project</button>
             </div>
           </div>
+        </div>
+      )}
+
+
+
+
+      {/* BENEFITS section (used inside VideoSection by id) */}
+      {isBenefits && (
+        <div className={styles.benefitsWrap}>
+          {/* optional heading for the section */}
+          {(title || subtitle) && (
+            <div className={styles.benefitsHead}>
+              {title ? <h2 className={styles.benefitsTitle}>{title}</h2> : null}
+              {subtitle ? <p className={styles.benefitsSubtitle}>{subtitle}</p> : null}
+            </div>
+          )}
+
+          {/* ✅ your BenefitsGrid goes here */}
+          {children}
         </div>
       )}
     </section>

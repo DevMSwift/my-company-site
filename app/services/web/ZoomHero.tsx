@@ -37,8 +37,6 @@ export default function ZoomHero() {
     useEffect(() => {
         if (!isImgReady) return;
 
-        // gsap.registerPlugin(ScrollTrigger);
-
         const root = rootRef.current;
         const heroContainer = heroContainerRef.current;
         const coverImg = coverImgRef.current;
@@ -184,7 +182,7 @@ export default function ZoomHero() {
                     end: "+=1500",
                     scrub: 1,
                     invalidateOnRefresh: true,
-                    // markers: true,
+
                 },
             });
 
@@ -245,22 +243,7 @@ export default function ZoomHero() {
                 <div ref={linksRef} className={styles.linksRow}>
                     <Link className={styles.linkCard} href="/services/web/hero">
                         <span className={styles.linkTitle}>Web</span>
-                        <span className={styles.linkSub}>Development</span>
-                    </Link>
-
-                    <Link className={styles.linkCard} href="/services/mobile">
-                        <span className={styles.linkTitle}>Mobile App</span>
-                        <span className={styles.linkSub}>Development Services</span>
-                    </Link>
-
-                    <Link className={styles.linkCard} href="/services/desktop">
-                        <span className={styles.linkTitle}>Desktop App</span>
-                        <span className={styles.linkSub}>Development Services</span>
-                    </Link>
-
-                    <Link className={styles.linkCard} href="/services/ui-ux">
-                        <span className={styles.linkTitle}>UX &amp; UI</span>
-                        <span className={styles.linkSub}>Design services</span>
+                        <span className={styles.linkSub}>Development (see more...)</span>
                     </Link>
                 </div>
 

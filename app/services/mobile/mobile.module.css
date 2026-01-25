@@ -1,0 +1,163 @@
+.page {
+  position: relative;
+  min-height: 100vh;
+  background: #000;
+  color: #fff;
+  overflow-x: clip; /* avoid side scroll */
+}
+
+/* Background layer behind everything */
+.bgWrap {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/*
+  ✅ This is the IMPORTANT part:
+  - Image is fixed-size and does NOT resize randomly
+  - We move it using left/top + transform (NOT padding)
+  - Works reliably with Next <Image fill />
+*/
+.bgImg {
+  object-fit: contain;
+  object-position: center top;
+  opacity: 0.95;
+
+  /* override fill behavior */
+  width: 250px !important;     /* control size here */
+  height: 1100px !important;
+  max-width: none !important;
+
+  left: 220px !important;       /* control position here */
+  top: 70px !important;
+min-width: 200px;
+  right: auto !important;
+  bottom: auto !important;
+
+  transform: translate3d(0, 0, 0);
+}
+
+/* Content above background */
+.hero {
+  position: relative;
+  z-index: 1;
+  padding-top: 200px;
+  padding-left: 100px;
+  padding-bottom: 100px;
+}
+
+.inner {
+  width: min(1180px, calc(100% - 64px));
+  margin: 0 auto;
+}
+
+.title {
+  margin: 0;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 0.98;
+  font-size: clamp(44px, 5vw, 82px);
+}
+
+.lead {
+  margin-top: 22px;
+  max-width: 740px;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.55;
+  font-size: 15px;
+}
+
+.cards {
+  margin-top: 44px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 34px;
+  align-items: start;
+}
+
+.card {
+  text-align: center;
+}
+
+.iconRing {
+  width: 96px;
+  height: 96px;
+  margin: 0 auto 18px auto;
+  border-radius: 999px;
+  border: 2px dashed rgba(242, 101, 34, 0.85);
+  display: grid;
+  place-items: center;
+}
+
+.icon {
+  width: 36px;
+  height: 36px;
+}
+
+.cardText {
+  margin: 0 auto;
+  max-width: 320px;
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1.55;
+  font-size: 13px;
+}
+
+/* Tablet */
+@media (max-width: 960px) {
+  .inner {
+    width: min(980px, calc(100% - 44px));
+  }
+
+  .cards {
+    grid-template-columns: 1fr;
+    gap: 28px;
+    max-width: 520px;
+  }
+
+  .cardText {
+    max-width: 520px;
+  }
+
+  .bgImg {
+    width: 460px !important;
+    left: 40px !important;
+    top: 110px !important;
+  }
+}
+
+/* Mobile */
+@media (max-width: 760px) {
+  .bgImg {
+    width: 360px !important;
+    left: 20px !important;
+    top: 90px !important;
+    opacity: 0.85;
+  }
+}
+
+@media (max-width: 560px) {
+  .hero {
+    padding-top: 110px;
+  }
+
+  .inner {
+    width: calc(100% - 28px);
+  }
+
+  .lead {
+    font-size: 14px;
+  }
+
+  .iconRing {
+    width: 88px;
+    height: 88px;
+  }
+
+  .bgImg {
+    width: 300px !important;
+    left: 14px !important;
+    top: 80px !important;
+  }
+}
