@@ -1,0 +1,134 @@
+.page {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  background: #000;
+}
+
+/* Background wrapper pinned to a corner (NOT full page) */
+.bgWrap {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 620px;
+  height: 620px;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.bgImg {
+  object-fit: contain;
+  object-position: top right;
+  opacity: 0.9;
+  transform: none !important;
+}
+
+/* Orange blurry glow (right side) */
+.orangeBlob {
+  position: absolute;
+  right: -220px;            /* push outside so it fades naturally */
+  top: 120px;
+  width: 760px;
+  height: 760px;
+  border-radius: 999px;
+  background: rgba(242, 101, 34, 0.55);
+  filter: blur(140px);
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* content layer */
+.content {
+  position: relative;
+  z-index: 1;
+  padding-top: 110px; /* space under your header */
+  padding-bottom: 90px;
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 520ms ease, transform 520ms ease;
+}
+
+.in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* keep everything aligned under the top bar */
+.hero,
+.body {
+  width: min(1100px, calc(100% - 64px));
+  margin: 0 auto;
+}
+
+.heroText {
+  max-width: 720px;
+}
+
+.title {
+  margin: 0;
+  color: #fff;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 0.95;
+  font-size: clamp(44px, 5vw, 74px);
+}
+
+.subtitle {
+  margin-top: 16px;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 15px;
+  line-height: 1.55;
+  max-width: 640px;
+}
+
+/* iMac block */
+.imacWrap {
+  margin-top: 26px;
+  display: flex;
+  justify-content: center;
+}
+
+.imacImg {
+  width: min(1100px, 100%);
+  height: auto;
+  display: block;
+  border-radius: 8px;
+}
+
+/* Body blocks */
+.body {
+  margin-top: 70px;
+  display: grid;
+  gap: 64px;
+}
+
+.block {
+  max-width: 760px;
+}
+
+.h2 {
+  margin: 0 0 12px 0;
+  color: #fff;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.05;
+  font-size: clamp(32px, 3.5vw, 50px);
+}
+
+.p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.68);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+/* Responsive: only shrink (never grow bigger than design) */
+@media (max-width: 900px) {
+  .bgWrap { width: 420px; height: 420px; }
+  .orangeBlob { width: 560px; height: 560px; filter: blur(120px); right: -180px; }
+}
+
+@media (max-width: 560px) {
+  .bgWrap { width: 300px; height: 300px; }
+  .orangeBlob { width: 420px; height: 420px; filter: blur(100px); right: -150px; top: 80px; }
+}

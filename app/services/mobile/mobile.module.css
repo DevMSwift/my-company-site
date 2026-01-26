@@ -1,163 +1,525 @@
+@import url("https://fonts.googleapis.com/css?family=Audiowide&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:300&display=swap");
+
 .page {
+  width: 100%;
+  min-height: 1800px;
+  margin: 0 0 -20px;
+  padding: 0;
+  background-color: #000000;
+  overflow-x: hidden;
   position: relative;
-  min-height: 100vh;
-  background: #000;
-  color: #fff;
-  overflow-x: clip; /* avoid side scroll */
-}
-
-/* Background layer behind everything */
-.bgWrap {
-  position: fixed;
-  inset: 0;
   z-index: 0;
-  pointer-events: none;
 }
 
-/*
-  ✅ This is the IMPORTANT part:
-  - Image is fixed-size and does NOT resize randomly
-  - We move it using left/top + transform (NOT padding)
-  - Works reliably with Next <Image fill />
-*/
-.bgImg {
-  object-fit: contain;
-  object-position: center top;
-  opacity: 0.95;
-
-  /* override fill behavior */
-  width: 250px !important;     /* control size here */
-  height: 1100px !important;
-  max-width: none !important;
-
-  left: 220px !important;       /* control position here */
-  top: 70px !important;
-min-width: 200px;
-  right: auto !important;
-  bottom: auto !important;
-
-  transform: translate3d(0, 0, 0);
-}
-
-/* Content above background */
-.hero {
+/* ---- scene ---- */
+.container {
   position: relative;
-  z-index: 1;
-  padding-top: 200px;
-  padding-left: 100px;
-  padding-bottom: 100px;
+  height: 100px;
+  /* space for the parallax scene */
 }
 
-.inner {
-  width: min(1180px, calc(100% - 64px));
+.parallax {
+  position: absolute;
+  left: 0;
+  top: 0;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  will-change: transform;
+}
+
+/* Floor */
+.floor {
+  width: 100%;
+  height: 786px;
+  top: 250px;
+  background-image: url("/images/floornew.png");
+  background-repeat: repeat-x;
+}
+
+/* Layers (we’ll target by data-layer in TSX, but CSS sets size/img) */
+.layer {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.layer[data-layer="4"] {
+  width: 2560px;
+  height: 201px;
+  top: 290px;
+  opacity: 0.5;
+  background-image: url("/images/layer4new.png");
+}
+
+.layer[data-layer="3"] {
+  width: 2560px;
+  height: 324px;
+  top: 325px;
+  opacity: 0.8;
+  background-image: url("/images/layer3new.png");
+}
+
+.layer[data-layer="2"] {
+  width: 2561px;
+  height: 276px;
+  top: 530px;
+  opacity: 0.85;
+  background-image: url("/images/layer2new.png");
+}
+
+.layer[data-layer="1"] {
+  width: 2560px;
+  height: 790px;
+  top: 270px;
+  background-image: url("/images/layer1new.png");
+}
+
+.layer[data-layer="0"] {
+  width: 3194px;
+  height: 958px;
+  top: 395px;
+  opacity: 0.9;
+  background-image: url("/images/layer0new.png");
+}
+
+/* ---- headline ---- */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}
+
+@keyframes bouncingAnim {
+  0% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(10px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.headline {
+  padding-top: 60px;
+  text-align: center;
+  position: relative;
+  z-index: 5;
+}
+
+.headline p {
+  font-size: 130px;
+  font-family: "Audiowide", "Open Sans", sans-serif;
+  color: #fefefe;
+  animation: fadeIn 1s;
+  margin: 130px auto 24px;
+}
+
+.headline .subTitle p {
+  font-family: "Poppins", "Open Sans", sans-serif;
+  font-size: 30px;
+  font-weight: 700;
+  animation: fadeIn 1s;
+  transform: translateY(-150px);
+}
+
+.scrollDown {
+  animation: fadeIn 1s;
+}
+
+.scrollDown span {
+  font-size: 16px;
+  color: #fefefe;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 300;
+  background-color: rgba(68, 68, 68, 0.8);
+  padding: 4px 16px 5px;
+  display: inline-block;
+  border-radius: 20px;
+}
+
+.bouncing {
+  animation: bouncingAnim 1.5s infinite 1s;
+}
+
+.unvisible {
+  transition: opacity 0.7s ease;
+  opacity: 0;
+}
+
+/* ---- content sections ---- */
+.section {
+  max-width: 900px;
   margin: 0 auto;
+  padding: 120px 20px;
+  color: #fff;
+  position: relative;
+  z-index: 10;
 }
 
-.title {
+.section h2 {
+  margin: 400px 0 12px;
+  font-size: 34px;
+}
+
+.section p {
   margin: 0;
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  line-height: 0.98;
-  font-size: clamp(44px, 5vw, 82px);
+  opacity: 0.85;
+  line-height: 1.6;
 }
 
-.lead {
-  margin-top: 22px;
-  max-width: 740px;
-  color: rgba(255, 255, 255, 0.7);
-  line-height: 1.55;
-  font-size: 15px;
+/* ========================================
+              Second Section
+=========================================== */
+.servicesSection {
+  padding-bottom: 80px;
 }
 
-.cards {
-  margin-top: 44px;
+.iconRow {
+  margin-top: 36px;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 34px;
+  gap: 48px;
   align-items: start;
 }
 
-.card {
+.iconCard {
   text-align: center;
 }
 
-.iconRing {
-  width: 96px;
-  height: 96px;
-  margin: 0 auto 18px auto;
-  border-radius: 999px;
-  border: 2px dashed rgba(242, 101, 34, 0.85);
-  display: grid;
-  place-items: center;
+.iconImg {
+
+  display: inline;
+  height: 92px;
+  width: 92px;
+  margin: 0 0 25px;
 }
 
-.icon {
-  width: 36px;
-  height: 36px;
-}
-
-.cardText {
+.iconText {
   margin: 0 auto;
   max-width: 320px;
-  color: rgba(255, 255, 255, 0.6);
-  line-height: 1.55;
-  font-size: 13px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.78);
 }
 
-/* Tablet */
-@media (max-width: 960px) {
-  .inner {
-    width: min(980px, calc(100% - 44px));
+
+/* =========================
+   INDUSTRIES (inside servicesSection)
+   ========================= */
+
+.industriesWrap {
+  margin-top: -200px;
+  /* start hidden until inView */
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 600ms ease, transform 600ms ease;
+  will-change: opacity, transform;
+}
+
+.inView.industriesWrap {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.industriesTitle {
+  text-align: center;
+  font-size: clamp(34px, 3.2vw, 54px);
+  font-weight: 700;
+  color: #fff;
+  margin: 0 20px 70px;
+}
+
+/* grid */
+.industriesGrid {
+  max-width: 1300px;
+  margin: 50px 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 56px 70px;
+}
+
+/* card reveal + stagger */
+.industryCard {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 650ms ease, transform 650ms ease, filter 350ms ease, box-shadow 350ms ease;
+  transition-delay: var(--d, 0ms);
+  will-change: transform, opacity;
+}
+
+.inView .industryCard {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* content */
+.industryIcon {
+  width: 70px;
+  height: auto;
+  display: block;
+  margin-bottom: 14px;
+  filter: drop-shadow(0 0 0 rgba(242, 101, 34, 0));
+  transition: transform 250ms ease, filter 300ms ease;
+  will-change: transform, filter;
+}
+
+.industriesBox {
+  width: 80px;
+  height: 80px;
+}
+
+.industryName {
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+  margin: 10px 0 8px;
+}
+
+.industryDesc {
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 0;
+  max-width: 420px;
+}
+
+/* glow hover */
+.industryCard:hover .industryIcon {
+  transform: translateY(-2px);
+  filter: drop-shadow(0 0 14px rgba(242, 101, 34, 0.55));
+}
+
+.industryCard:hover .industryName {
+  color: #fff;
+  text-shadow: 0 0 16px rgba(242, 101, 34, 0.22);
+}
+
+/* responsive: tablet 2 cols */
+@media (max-width: 1024px) {
+  .industriesGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 46px 46px;
+  }
+}
+
+/* responsive: mobile 1 col */
+@media (max-width: 600px) {
+  .industriesWrap {
+    margin-top: -150px;
   }
 
-  .cards {
+  .industryCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .industriesTitle {
+    margin-bottom: 44px;
+  }
+
+  .industryName {
+    text-align: center;
+  }
+
+  .industriesGrid {
+    grid-template-columns: 1fr;
+    gap: 34px;
+  }
+
+  .industryDesc {
+    max-width: 100%;
+    text-align: center;
+  }
+}
+
+/* reduced motion */
+@media (prefers-reduced-motion: reduce) {
+
+  .industriesWrap,
+  .industryCard,
+  .industryIcon {
+    transition: none !important;
+    transform: none !important;
+  }
+
+  .industryCard {
+    opacity: 1 !important;
+  }
+}
+
+
+
+/* ===================================
+             MOBILE RESPONSE
+====================================== */
+
+@media (max-width: 900px) {
+  .iconRow {
+    gap: 28px;
+  }
+
+  .iconText {
+    max-width: 260px;
+    font-size: 13px;
+  }
+}
+
+/* Mobile tuning */
+@media (max-width: 760px) {
+
+  .container {
+    height: 200px;
+  }
+
+  .headline p {
+    font-size: 72px;
+    margin: 90px auto 18px;
+  }
+
+  .section h2 {
+    font-size: 26px;
+  }
+
+  .headline .subTitle p {
+    transform: translateY(-100px);
+  }
+
+  /* ---- Second Section ---- */
+  .iconRow {
+    grid-template-columns: 1fr;
+    gap: 22px;
+    justify-items: center;
+  }
+
+  .iconCard {
+    text-align: center;
+  }
+
+  .iconText {
+    max-width: 420px;
+    justify-content: center;
+  }
+}
+
+
+/* =========================
+   EXECUTION SECTION
+========================= */
+
+.execSection {
+  position: relative;
+  overflow: hidden;
+  margin-top: -200px;
+}
+
+.execTitle {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  font-size: clamp(28px, 3.6vw, 54px);
+  line-height: 1.15;
+  font-weight: 700;
+  margin: 0 0 clamp(28px, 4vw, 50px);
+  color: #fff;
+  padding-bottom: 40px;
+}
+
+.execGrid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(26px, 5.5vw, 56px);
+  margin: 0 auto;
+}
+
+.execCard {
+  text-align: center;
+}
+
+.execIcon {
+  display: block;
+  margin: 0 auto 12px;
+  height: auto;
+  width: auto;
+}
+
+.execName {
+  margin: 10px 0 10px;
+  font-size: clamp(18px, 1.6vw, 22px);
+  font-weight: 700;
+  color: #fff;
+}
+
+.execDesc {
+  margin: 0 auto;
+  max-width: 420px;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: clamp(13px, 1.05vw, 15px);
+  line-height: 1.45;
+}
+
+/* ✅ last card centered like the design */
+.execCardCenter {
+  grid-column: 1 / -1;
+  /* takes full row */
+  justify-self: center;
+  /* centers the card */
+  margin-top: clamp(10px, 2vw, 18px);
+}
+
+/* Tablets */
+@media (max-width: 900px) {
+  .execGrid {
+    width: min(900px, 92vw);
+    gap: 28px;
+  }
+}
+
+/* Mobile: stack */
+@media (max-width: 640px) {
+  .execGrid {
     grid-template-columns: 1fr;
     gap: 28px;
-    max-width: 520px;
   }
 
-  .cardText {
-    max-width: 520px;
+  .execCardCenter {
+    width: 100%;
   }
 
-  .bgImg {
-    width: 460px !important;
-    left: 40px !important;
-    top: 110px !important;
+  .execDesc {
+    max-width: 520px;
   }
 }
 
-/* Mobile */
-@media (max-width: 760px) {
-  .bgImg {
-    width: 360px !important;
-    left: 20px !important;
-    top: 90px !important;
-    opacity: 0.85;
-  }
+
+/* Full-bleed image (edge-to-edge) */
+.fullBleed {
+  position: relative;
+  width: 100vw;                 
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+
+  height: 100vw; 
+  overflow: hidden;
+  background: #000;
 }
 
-@media (max-width: 560px) {
-  .hero {
-    padding-top: 110px;
-  }
-
-  .inner {
-    width: calc(100% - 28px);
-  }
-
-  .lead {
-    font-size: 14px;
-  }
-
-  .iconRing {
-    width: 88px;
-    height: 88px;
-  }
-
-  .bgImg {
-    width: 300px !important;
-    left: 14px !important;
-    top: 80px !important;
-  }
+.fullBleedImg {
+  object-fit: cover;            
+  object-position: center;     
 }
