@@ -156,9 +156,9 @@ export default function Header({ hidden = false }: { hidden?: boolean }) {
             </div>
           </div>
 
-          <a href="#projects" className={styles.link}>
+          <Link href="/projects" className={styles.link}>
             Projects
-          </a>
+          </Link>
           <a href="#contact" className={styles.link}>
             Contact
           </a>
