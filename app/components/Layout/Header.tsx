@@ -284,9 +284,9 @@ export default function Header({ hidden = false }: { hidden?: boolean }) {
             </div>
           </div>
 
-          <a href="#projects" onClick={() => setMobileOpen(false)}>
+          <Link href="/projects" className={styles.link} onClick={() => setMobileOpen(false)}>
             Projects
-          </a>
+          </Link>
           <a href="#contact" onClick={() => setMobileOpen(false)}>
             Contact
           </a>
